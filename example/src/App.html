@@ -4,8 +4,9 @@
 </Loadable>
 
 <h1>This one will not</h1>
-<Loadable ref:retry loader={failureLoader} bind:error>
+<Loadable ref:retry loader={getFailureLoader(5000)} timeout="3000" bind:error>
   <div slot="loading">Loading but doomed to failed...</div>
+  <div slot="timeout">This is taking a while...</div>
   <div slot="error">
     {error}
     <br>
@@ -13,12 +14,19 @@
   </div>
 </Loadable>
 
-
 <h1>This one will work with custom props</h1>
-<Loadable loader={delayedLoader} bind:component="successComponent">
+<Loadable loader={getDelayedLoader()} bind:component="successComponent">
   <div slot="loading">Loading and blessed to succeed...</div>
   <div slot="success">
     <svelte:component this={successComponent} customProp={true}/>
+  </div>
+</Loadable>
+
+<h1>This one will timeout</h1>
+<Loadable loader={getDelayedLoader(7000)} timeout="3000">
+  <div slot="loading">Loading...</div>
+  <div slot="timeout">
+    This is taking a little bit too long...
   </div>
 </Loadable>
 
@@ -29,16 +37,16 @@
     },
     data() {
       return {
-        delayedLoader: () =>
+        getDelayedLoader: (delay = 3000) => () =>
           new Promise((resolve, reject) =>
             setTimeout(() => {
               resolve(import('./AsyncComponent.html'))
-            }, 3000),
+            }, delay),
           ),
         successLoader: () => import('./AsyncComponent.html'),
-        failureLoader: () =>
+        getFailureLoader: (delay = 3000) => () =>
           new Promise((resolve, reject) =>
-            setTimeout(() => reject(new Error('Some error')), 3000),
+            setTimeout(() => reject(new Error('Some error')), delay),
           ),
       }
     },

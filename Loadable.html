@@ -1,5 +1,7 @@
 {#if state === STATES.ERROR}
   <slot name="error"/>
+{:elseif state === STATES.TIMEOUT}
+  <slot name="timeout"/>
 {:elseif state === STATES.LOADING}
   <slot name="loading"/>
 {:elseif state === STATES.SUCCESS && component}
@@ -16,14 +18,19 @@
     LOADING: 1,
     SUCCESS: 2,
     ERROR: 3,
+    TIMEOUT: 4,
   })
 
   export default {
     data() {
       return {
+        delay: 0,
+        timeout: null,
         loader: null,
         component: null,
         error: null,
+        _loadTimer: null,
+        _timeoutTimer: null,
         state: STATES.INITIALIZED,
         STATES,
       }
@@ -36,20 +43,36 @@
       if (this.options.slots && this.options.slots.success) {
         this.set({ hasSuccessSlot: true })
       }
-
       this.load()
     },
     methods: {
+      _clearTimers() {
+        const { _loadTimer, _timeoutTimer } = this.get()
+        clearTimeout(_loadTimer)
+        clearTimeout(_timeoutTimer)
+      },
       load() {
-        const { loader, delay } = this.get()
+        const { loader, delay, timeout } = this.get()
+        this._clearTimers()
+
         if (typeof loader === 'function') {
-          const loadTimeout = setTimeout(() => {
+          this.set({
+            _loadTimer: setTimeout(() => {
+              this.set({
+                state: STATES.LOADING,
+                error: null,
+                component: null,
+              })
+            }, parseFloat(delay)),
+          })
+
+          if (timeout) {
             this.set({
-              state: STATES.LOADING,
-              error: null,
-              component: null,
+              _timeoutTimer: setTimeout(() => {
+                this.set({ state: STATES.TIMEOUT })
+              }, parseFloat(timeout)),
             })
-          }, parseFloat(delay))
+          }
 
           loader()
             .then(componentModule => {
@@ -57,14 +80,14 @@
                 state: STATES.SUCCESS,
                 component: componentModule.default || componentModule,
               })
-              clearTimeout(loadTimeout)
+              this._clearTimers()
             })
-            .catch(e => {
+            .catch(error => {
               this.set({
                 state: STATES.ERROR,
-                error: e,
+                error,
               })
-              clearTimeout(loadTimeout)
+              this._clearTimers()
             })
         }
       },

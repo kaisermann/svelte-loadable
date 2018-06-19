@@ -2,24 +2,23 @@
 
 > Dynamically load a svelte component. Based on [react-loadable](https://github.com/jamiebuilds/react-loadable).
 
-# How to use
+## How to use
 
 - Props
   - `loader`: a function which `import()` your component to the `<Loadable>` component;
-
-  - `delay`: minimum delay in `msecs` for the loading slot to appear.
+  - `delay`: minimum delay in `msecs` for showing the `loading slot`;
+  - `timeout`: time in `msecs` for showing the `timeout slot`.
 
 - Slots
-  - Optionally fill the `loading` slot for customizing the loading state;
-
-  - Optionally fill the `error` slot for customizing the error state. You can `bind:error` to have access to the error variable;
-
-  - Optionally fill the `success` slot for customizing the imported component render (add props, etc).
+  - `loading`: customizes the loading state;
+  - `error`: customizes the error state. You can `bind:error` to have access to the error variable;
+  - `timeout`: customizes the timeout state. Will only appear if `timeout` prop is defined;
+  - `success`: customizes the imported component render (add props, etc).
 
 - Methods
   - Use the `.load()` method to retry loading.
 
-**Example:**
+## Example
 
 ```html
 <Loadable ref:loadable {loader} bind:error>
