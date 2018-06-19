@@ -1,10 +1,10 @@
 {
-  "name": "library-boilerplate",
-  "version": "0.0.1",
+  "name": "svelte-loadable",
+  "version": "0.0.2",
   "license": "MIT",
-  "main": "dist",
-  "types": "src/index.d.ts",
-  "description": "",
+  "main": "Loadable.html",
+  "svelte": "Loadable.html",
+  "description": "Dynamically load a svelte component",
   "author": "Christian Kaisermann <christian@kaisermann.me>",
   "repository": "https://github.com/kaisermann",
   "keywords": [
