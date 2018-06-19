@@ -4,13 +4,20 @@
 
 # How to use
 
-Just pass a `loader` function which imports your component to the `<Loadable>` component.
+- Props
+  - `loader`: a function which `import()` your component to the `<Loadable>` component;
 
-Fill the `loading` slot for customizing the loading state.
+  - `delay`: minimum delay in `msecs` for the loading slot to appear.
 
-Fill the `error` slot for customizing the error state. You can `bind:error` to have access to the error variable.
+- Slots
+  - Optionally fill the `loading` slot for customizing the loading state;
 
-Use the `.load()` method to retry loading.
+  - Optionally fill the `error` slot for customizing the error state. You can `bind:error` to have access to the error variable;
+
+  - Optionally fill the `success` slot for customizing the imported component render (add props, etc).
+
+- Methods
+  - Use the `.load()` method to retry loading.
 
 **Example:**
 
@@ -27,7 +34,7 @@ Use the `.load()` method to retry loading.
 <script>
   export default {
     components: {
-      Loadable: '../../Loadable.html'
+      Loadable: 'svelte-loadable',
     },
     data() {
       return {
@@ -37,3 +44,5 @@ Use the `.load()` method to retry loading.
   }
 </script>
 ```
+
+For more examples, please check the [`example/src/App.html`](https://github.com/kaisermann/svelte-loadable/blob/master/example/src/App.html) file.

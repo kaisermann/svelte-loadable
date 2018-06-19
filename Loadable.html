@@ -41,13 +41,15 @@
     },
     methods: {
       load() {
-        const { loader } = this.get()
+        const { loader, delay } = this.get()
         if (typeof loader === 'function') {
-          this.set({
-            state: STATES.LOADING,
-            error: null,
-            component: null,
-          })
+          const loadTimeout = setTimeout(() => {
+            this.set({
+              state: STATES.LOADING,
+              error: null,
+              component: null,
+            })
+          }, parseFloat(delay))
 
           loader()
             .then(componentModule => {
@@ -55,12 +57,14 @@
                 state: STATES.SUCCESS,
                 component: componentModule.default || componentModule,
               })
+              clearTimeout(loadTimeout)
             })
             .catch(e => {
               this.set({
                 state: STATES.ERROR,
                 error: e,
               })
+              clearTimeout(loadTimeout)
             })
         }
       },
