@@ -16,7 +16,7 @@
   "scripts": {
     "lint": "eslint \"*.html\"",
     "format": "eslint --fix \"*.html\"",
-    "prepublishOnly": "npm run format && npm run test"
+    "prepublishOnly": "npm run format"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",

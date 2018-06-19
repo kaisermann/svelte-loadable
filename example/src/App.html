@@ -1,0 +1,46 @@
+<h1>This one will work</h1>
+<Loadable loader={successLoader} delay="300">
+  <div slot="loading">Loading and blessed to succeed...</div>
+</Loadable>
+
+<h1>This one will not</h1>
+<Loadable ref:retry loader={failureLoader} bind:error>
+  <div slot="loading">Loading but doomed to failed...</div>
+  <div slot="error">
+    {error}
+    <br>
+    <button on:click="refs.retry.load()">Try again</button>
+  </div>
+</Loadable>
+
+
+<h1>This one will work with custom props</h1>
+<Loadable loader={delayedLoader} bind:component="successComponent">
+  <div slot="loading">Loading and blessed to succeed...</div>
+  <div slot="success">
+    <svelte:component this={successComponent} customProp={true}/>
+  </div>
+</Loadable>
+
+<script>
+  export default {
+    components: {
+      Loadable: '../../Loadable.html',
+    },
+    data() {
+      return {
+        delayedLoader: () =>
+          new Promise((resolve, reject) =>
+            setTimeout(() => {
+              resolve(import('./AsyncComponent.html'))
+            }, 3000),
+          ),
+        successLoader: () => import('./AsyncComponent.html'),
+        failureLoader: () =>
+          new Promise((resolve, reject) =>
+            setTimeout(() => reject(new Error('Some error')), 3000),
+          ),
+      }
+    },
+  }
+</script>
