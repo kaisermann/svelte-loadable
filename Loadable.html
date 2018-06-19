@@ -3,7 +3,11 @@
 {:elseif state === STATES.LOADING}
   <slot name="loading"/>
 {:elseif state === STATES.SUCCESS && component}
-  <svelte:component this={component}/>
+  {#if hasSuccessSlot}
+    <slot name="success"/>
+  {:else}
+    <svelte:component this={component}/>
+  {/if}
 {/if}
 
 <script>
@@ -28,6 +32,11 @@
       if (!this.options.data) {
         return console.error('[svelte-loadable] No data passed to <Loadable/>')
       }
+
+      if (this.options.slots && this.options.slots.success) {
+        this.set({ hasSuccessSlot: true })
+      }
+
       this.load()
     },
     methods: {
