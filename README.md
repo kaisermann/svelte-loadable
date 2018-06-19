@@ -23,7 +23,7 @@
 
 ```html
 <Loadable ref:loadable {loader} bind:error>
-  <div slot="loading">Loading but doomed to failed...</div>
+  <div slot="loading">Loading...</div>
   <div slot="error">
     {error}
     <br>
