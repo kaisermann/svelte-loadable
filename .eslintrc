@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "extends": ["standard", "prettier", "prettier/standard"],
+  "plugins": [
+    "standard", "prettier", "html"
+  ],
+  "parser": "babel-eslint",
+  "settings": {
+    "html/html-extensions": [".html", ".svelte"],
+    "html/indent": "+2",
+    "html/report-bad-indent": "warn"
+  },
+  "env": {
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "modules": true
+    }
+  }
+}

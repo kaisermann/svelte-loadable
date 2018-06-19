@@ -1,0 +1,60 @@
+{#if state === STATES.ERROR}
+  <slot name="error"/>
+{:elseif state === STATES.LOADING}
+  <slot name="loading"/>
+{:elseif state === STATES.SUCCESS && component}
+  <svelte:component this={component}/>
+{/if}
+
+<script>
+  const STATES = Object.freeze({
+    INITIALIZED: 0,
+    LOADING: 1,
+    SUCCESS: 2,
+    ERROR: 3,
+  })
+
+  export default {
+    data() {
+      return {
+        loader: null,
+        component: null,
+        error: null,
+        state: STATES.INITIALIZED,
+        STATES,
+      }
+    },
+    oncreate() {
+      if (!this.options.data) {
+        return console.error('[svelte-loadable] No data passed to <Loadable/>')
+      }
+      this.load()
+    },
+    methods: {
+      load() {
+        const { loader } = this.get()
+        if (typeof loader === 'function') {
+          this.set({
+            state: STATES.LOADING,
+            error: null,
+            component: null,
+          })
+
+          loader()
+            .then(componentModule => {
+              this.set({
+                state: STATES.SUCCESS,
+                component: componentModule.default || componentModule,
+              })
+            })
+            .catch(e => {
+              this.set({
+                state: STATES.ERROR,
+                error: e,
+              })
+            })
+        }
+      },
+    },
+  }
+</script>
