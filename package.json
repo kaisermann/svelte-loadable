@@ -1,6 +1,6 @@
 {
   "name": "svelte-loadable",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "Loadable.svelte",
   "svelte": "Loadable.svelte",
@@ -15,8 +15,7 @@
   ],
   "scripts": {
     "lint": "eslint \"*.svelte\"",
-    "format": "eslint --fix \"*.svelte\"",
-    "prepublishOnly": "npm run format"
+    "format": "eslint --fix \"*.svelte\""
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
