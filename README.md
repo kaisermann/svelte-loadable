@@ -20,7 +20,17 @@
 - Methods
   - Use the `.load()` method to retry loading.
 
-## Example
+## Examples
+
+```html
+<script>
+  import Loadable from 'svelte-loadable'
+</script>
+
+<Loadable loader={() => import('./AsyncComponent.svelte')} />
+```
+
+---
 
 ```html
 <script>
@@ -36,5 +46,7 @@
   </div>
 </Loadable>
 ```
+
+---
 
 For more examples, please check the [`example/src/App.svelte`](https://github.com/kaisermann/svelte-loadable/blob/master/example/src/App.svelte) file.
