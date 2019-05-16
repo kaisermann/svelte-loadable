@@ -2,8 +2,8 @@
   "name": "svelte-loadable",
   "version": "0.0.4",
   "license": "MIT",
-  "main": "Loadable.html",
-  "svelte": "Loadable.html",
+  "main": "Loadable.svelte",
+  "svelte": "Loadable.svelte",
   "description": "Dynamically load a svelte component",
   "author": "Christian Kaisermann <christian@kaisermann.me>",
   "repository": "https://github.com/kaisermann",
@@ -14,25 +14,25 @@
     "loadable"
   ],
   "scripts": {
-    "lint": "eslint \"*.html\"",
-    "format": "eslint --fix \"*.html\"",
+    "lint": "eslint \"*.svelte\"",
+    "format": "eslint --fix \"*.svelte\"",
     "prepublishOnly": "npm run format"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.3",
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-html": "^4.0.3",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "prettier": "^1.12.1",
-    "svelte": "^2.7.2"
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-html": "^5.0.5",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^9.0.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "prettier": "^1.17.1",
+    "svelte": "^3.4.1"
   },
   "peerDependencies": {
-    "svelte": "^2.7.2"
+    "svelte": "^3.4.1"
   }
 }
