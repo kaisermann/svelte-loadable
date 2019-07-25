@@ -66,7 +66,7 @@
 {:else if state === STATES.LOADING}
   <slot name="loading" />
 {:else if state === STATES.SUCCESS}
-  {#if SLOTS.success}
+  {#if SLOTS && SLOTS.success}
     <slot name="success" {component} />
   {:else}
     <svelte:component this={component} />
