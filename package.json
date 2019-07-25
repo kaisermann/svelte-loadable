@@ -1,12 +1,12 @@
 {
   "name": "svelte-loadable",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "main": "Loadable.svelte",
   "svelte": "Loadable.svelte",
   "description": "Dynamically load a svelte component",
   "author": "Christian Kaisermann <christian@kaisermann.me>",
-  "repository": "https://github.com/kaisermann",
+  "repository": "https://github.com/kaisermann/svelte-loadable",
   "keywords": [
     "svelte",
     "async",
@@ -15,8 +15,15 @@
   ],
   "scripts": {
     "lint": "eslint \"*.svelte\"",
-    "format": "eslint --fix \"*.svelte\""
+    "format": "eslint --fix \"*.svelte\"",
+    "version": "npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
+    "tag": "git tag -a v$npm_package_version -m 'Release v$npm_package_version'",
+    "release": "npm run version && git add package.json && git commit -m \"chore: release v$npm_package_version\"",
+    "prepublishOnly": "npm run release && npm run tag"
   },
+  "files": [
+    "Loadable.svelte"
+  ],
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
