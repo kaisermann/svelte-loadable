@@ -1,9 +1,7 @@
 {
   "root": true,
-  "extends": ["standard", "prettier", "prettier/standard"],
-  "plugins": [
-    "standard", "prettier", "html"
-  ],
+  "extends": ["eslint:recommended", "prettier", "prettier/standard"],
+  "plugins": ["prettier", "html"],
   "parser": "babel-eslint",
   "settings": {
     "html/html-extensions": [".html", ".svelte"],
@@ -11,11 +9,19 @@
     "html/report-bad-indent": "warn"
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "es6": true
   },
   "parserOptions": {
     "ecmaFeatures": {
       "modules": true
     }
+  },
+  "globals": {
+    "$$props": true
+  },
+  "rules": {
+    "no-unused-vars": "off",
+    "no-unused-labels": "off"
   }
 }

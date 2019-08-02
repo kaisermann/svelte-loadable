@@ -13,6 +13,6 @@
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
-    "dev": "webpack-serve --static public/"
+    "dev": "webpack-serve --static public/ --port 8080"
   }
 }

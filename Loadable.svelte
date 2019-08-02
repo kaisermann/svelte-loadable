@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte'
 
-  const SLOTS = $$props.$$slots
   const STATES = Object.freeze({
     INITIALIZED: 0,
     LOADING: 1,
@@ -16,13 +15,21 @@
   export let component = null
   export let error = null
 
-  let loadTimer = null
-  let timeoutTimer = null
+  let load_time = null
+  let timeout_timer = null
   let state = STATES.INITIALIZED
+  let componentProps
+  let slots
+
+  $: {
+    let { $$slots, delay, timeout, loader, component, error, ...rest } = $$props
+    slots = $$slots
+    componentProps = rest
+  }
 
   const clearTimers = () => {
-    clearTimeout(loadTimer)
-    clearTimeout(timeoutTimer)
+    clearTimeout(load_time)
+    clearTimeout(timeout_timer)
   }
 
   export const load = async () => {
@@ -32,14 +39,14 @@
       return
     }
 
-    loadTimer = setTimeout(() => {
+    load_time = setTimeout(() => {
       state = STATES.LOADING
       error = null
       component = null
     }, parseFloat(delay))
 
     if (timeout) {
-      timeoutTimer = setTimeout(() => {
+      timeout_timer = setTimeout(() => {
         state = STATES.TIMEOUT
       }, parseFloat(timeout))
     }
@@ -66,8 +73,8 @@
 {:else if state === STATES.LOADING}
   <slot name="loading" />
 {:else if state === STATES.SUCCESS}
-  {#if SLOTS && SLOTS.success}
-    <slot name="success" {component} />
+  {#if slots && slots.success}
+    <slot name="success" {component} props={$$props} />
   {:else}
     <svelte:component this={component} />
   {/if}
