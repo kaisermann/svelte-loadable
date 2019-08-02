@@ -1,3 +1,9 @@
+# [1.1.0](https://github.com/kaisermann/svelte-loadable/compare/v1.0.2...v1.1.0) (2019-08-02)
+
+### Features
+
+- Pass props down to loaded component ([09fefbd](https://github.com/kaisermann/svelte-loadable/commit/09fefbd))
+
 ## [1.0.2](https://github.com/kaisermann/svelte-loadable/compare/v1.0.1...v1.0.2) (2019-07-25)
 
 ### Bug Fixes
@@ -6,7 +12,7 @@
 
 ## [1.0.1](https://github.com/kaisermann/svelte-loadable/compare/v1.0.0...v1.0.1) (2019-07-25)
 
-## [1.0.0](https://github.com/kaisermann/svelte-loadable/compare/7918ae2...v1.0.0) (2019-07-25)
+# [1.0.0](https://github.com/kaisermann/svelte-loadable/compare/7918ae2...v1.0.0) (2019-07-25)
 
 ### Features
 
