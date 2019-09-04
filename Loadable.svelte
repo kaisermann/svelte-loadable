@@ -27,12 +27,12 @@
     componentProps = rest
   }
 
-  const clearTimers = () => {
+  function clearTimers() {
     clearTimeout(load_time)
     clearTimeout(timeout_timer)
   }
 
-  export const load = async () => {
+  export async function load() {
     clearTimers()
 
     if (typeof loader !== 'function') {
@@ -74,7 +74,7 @@
   <slot name="loading" />
 {:else if state === STATES.SUCCESS}
   {#if slots && slots.success}
-    <slot name="success" {component} props={$$props} />
+    <slot name="success" {component} props={componentProps} />
   {:else}
     <svelte:component this={component} {...componentProps} />
   {/if}

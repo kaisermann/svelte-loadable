@@ -20,12 +20,30 @@ Just pass a `loader` method which return a async module import:
 - `delay`: minimum delay in `msecs` for showing the `loading slot`. Default: 200
 - `timeout`: time in `msecs` for showing the `timeout slot`.
 
+Any other prop will be passed directly onto the rendered component if no `success` slot is defined:
+
+```html
+<Loadable loader="{...}" foo="cookie" bar="potato" />
+<!-- `foo` and `bar` will be available to the rendered component -->
+```
+
+If a `success` slot is used, the passed props will be available in the slots `props` object:
+
+```html
+<Loadable loader="{...}" foo="cookie" bar="potato">
+  <div slot="success" let:component let:props>
+    <svelte:component this="{component}" {...props} />
+    <!-- `foo` and `bar` will be available to the rendered component -->
+  </div>
+</Loadable>
+```
+
 ### Slots
 
 - `loading`: customizes the loading state;
 - `error`: customizes the error state. You can `let:error` to have access to the error variable;
 - `timeout`: customizes the timeout state. Will only appear if `timeout` prop is defined;
-- `success`: customizes the imported component render (add props, etc). You can `let:component` to access the imported component.
+- `success`: customizes the imported component render (add props, etc). You can `let:component` to access the imported component and `let:props` to get all props passed to the component that are not related to `svelte-loadable`.
 
 #### Example:
 
