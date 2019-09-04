@@ -9,7 +9,7 @@
     TIMEOUT: 4,
   })
 
-  export let delay = 0
+  export let delay = 200
   export let timeout = null
   export let loader = null
   export let component = null
