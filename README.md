@@ -16,8 +16,8 @@ Just pass a `loader` method which return a async module import:
 
 ### Props
 
-- `loader`: a function which `import()` your component to the `<Loadable>` component;
-- `delay`: minimum delay in `msecs` for showing the `loading slot`;
+- `loader`: a function which `import()` your component to the `<Loadable>` component.
+- `delay`: minimum delay in `msecs` for showing the `loading slot`. Default: 200
 - `timeout`: time in `msecs` for showing the `timeout slot`.
 
 ### Slots
