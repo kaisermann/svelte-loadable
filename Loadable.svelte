@@ -76,6 +76,6 @@
   {#if slots && slots.success}
     <slot name="success" {component} props={$$props} />
   {:else}
-    <svelte:component this={component} />
+    <svelte:component this={component} {...componentProps} />
   {/if}
 {/if}
