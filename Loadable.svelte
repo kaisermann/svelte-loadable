@@ -1,6 +1,4 @@
 <script>
-  import { onMount } from 'svelte'
-
   const STATES = Object.freeze({
     INITIALIZED: 0,
     LOADING: 1,
@@ -63,7 +61,7 @@
     clearTimers()
   }
 
-  onMount(load)
+  load()
 </script>
 
 {#if state === STATES.ERROR}
