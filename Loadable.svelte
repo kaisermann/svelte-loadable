@@ -1,5 +1,6 @@
-<script>
-  import { onMount } from 'svelte'
+<script context="module">
+  export const ALL_LOADERS = new Map()
+  export const LOADED = new Map()
 
   const STATES = Object.freeze({
     INITIALIZED: 0,
@@ -8,6 +9,49 @@
     ERROR: 3,
     TIMEOUT: 4,
   })
+
+  export function findByResolved (resolved) {
+    for (let [loader, r] of ALL_LOADERS) {
+      if (r === resolved) return loader
+    }
+    return null
+  }
+
+  export function register (loadable) {
+    const resolved = loadable.resolve()
+    const loader = findByResolved(resolved)
+    if (loader) {
+      return loader
+    } else {
+      ALL_LOADERS.set(loadable.loader, resolved)
+      return loadable.loader
+    }
+  }
+
+  export function preloadAll () {
+    return Promise.all(
+      Array.from(ALL_LOADERS.keys())
+      .filter(loader => !LOADED.has(loader))
+      .map(async (loader) => await load(loader))
+    ).then(() => {
+      // If new loaders have been registered by loaded components,
+      // load them next.
+      if (ALL_LOADERS.size > LOADED.size) {
+        return preloadAll()
+      }
+    })
+  }
+
+  export async function load (loader) {
+    const componentModule = await loader()
+    const component = componentModule.default || componentModule
+    LOADED.set(loader, component)
+    return component
+  }
+</script>
+
+<script>
+  import { onMount, getContext } from 'svelte'
 
   export let delay = 200
   export let timeout = null
@@ -25,6 +69,11 @@
     let { $$slots, delay, timeout, loader, component, error, ...rest } = $$props
     slots = $$slots
     componentProps = rest
+  }
+
+  const capture = getContext('svelte-loadable-capture')
+  if (typeof capture === 'function' && ALL_LOADERS.has(loader)) {
+    capture(loader)
   }
 
   function clearTimers() {
@@ -55,6 +104,7 @@
       const componentModule = await loader()
       state = STATES.SUCCESS
       component = componentModule.default || componentModule
+      LOADED.set(loader, component)
     } catch (e) {
       state = STATES.ERROR
       error = e
@@ -63,7 +113,12 @@
     clearTimers()
   }
 
-  onMount(load)
+  if (LOADED.has(loader)) {
+    state = STATES.SUCCESS
+    component = LOADED.get(loader)
+  } else {
+    onMount(load)
+  }
 </script>
 
 {#if state === STATES.ERROR}
