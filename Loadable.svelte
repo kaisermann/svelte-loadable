@@ -88,11 +88,17 @@
       return
     }
 
-    load_time = setTimeout(() => {
+    error = null
+    component = null
+
+    if (delay > 0) {
+      state = STATES.INITIALIZED
+      load_time = setTimeout(() => {
+        state = STATES.LOADING
+      }, parseFloat(delay))
+    } else {
       state = STATES.LOADING
-      error = null
-      component = null
-    }, parseFloat(delay))
+    }
 
     if (timeout) {
       timeout_timer = setTimeout(() => {

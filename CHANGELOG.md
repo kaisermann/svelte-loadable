@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/kaisermann/svelte-loadable/compare/v1.1.1...v1.2.0) (2019-09-09)
+
+
+### Features
+
+* 🎸 make loading happen before `onMount` ([5213bb0](https://github.com/kaisermann/svelte-loadable/commit/5213bb0)), closes [#12](https://github.com/kaisermann/svelte-loadable/issues/12)
+
+
+
 ## [1.1.1](https://github.com/kaisermann/svelte-loadable/compare/v1.0.2...v1.1.1) (2019-09-04)
 
 
