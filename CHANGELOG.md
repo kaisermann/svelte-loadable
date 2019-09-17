@@ -1,3 +1,13 @@
+# [1.3.0](https://github.com/kaisermann/svelte-loadable/compare/v1.2.0...v1.3.0) (2019-09-17)
+
+
+### Features
+
+* add loader cache ([#15](https://github.com/kaisermann/svelte-loadable/issues/15)) ([43d26cf](https://github.com/kaisermann/svelte-loadable/commit/43d26cf))
+* only delay setting state to LOADING if delay is > 0, and reset defaults on reload ([b5e70fe](https://github.com/kaisermann/svelte-loadable/commit/b5e70fe))
+
+
+
 # [1.2.0](https://github.com/kaisermann/svelte-loadable/compare/v1.1.1...v1.2.0) (2019-09-09)
 
 
@@ -21,16 +31,12 @@
 
 
 
-## [1.0.2](https://github.com/kaisermann/svelte-loadable/compare/v1.0.1...v1.0.2) (2019-07-25)
+## [1.0.2](https://github.com/kaisermann/svelte-loadable/compare/v1.0.0...v1.0.2) (2019-07-25)
 
 
 ### Bug Fixes
 
 * check if SLOTS exists before checking for a specific slot ([d3c82ba](https://github.com/kaisermann/svelte-loadable/commit/d3c82ba))
-
-
-
-## [1.0.1](https://github.com/kaisermann/svelte-loadable/compare/v1.0.0...v1.0.1) (2019-07-25)
 
 
 
