@@ -10,44 +10,45 @@
     TIMEOUT: 4,
   })
 
-  export function findByResolved (resolved) {
+  export function findByResolved(resolved) {
     for (let [loader, r] of ALL_LOADERS) {
       if (r === resolved) return loader
     }
     return null
   }
 
-  export function register (loadable) {
+  export function register(loadable) {
     const resolved = loadable.resolve()
     const loader = findByResolved(resolved)
-    if (loader) {
-      return loader
-    } else {
-      ALL_LOADERS.set(loadable.loader, resolved)
-      return loadable.loader
-    }
+
+    if (loader) return loader
+
+    ALL_LOADERS.set(loadable.loader, resolved)
+    return loadable.loader
   }
 
-  export function preloadAll () {
+  export function preloadAll() {
     return Promise.all(
       Array.from(ALL_LOADERS.keys())
-      .filter(loader => !LOADED.has(loader))
-      .map(async (loader) => await load(loader))
+        .filter(loader => !LOADED.has(loader))
+        .map(async loader => load(loader)),
     ).then(() => {
-      // If new loaders have been registered by loaded components,
-      // load them next.
+      /** If new loaders have been registered by loaded components, load them next. */
       if (ALL_LOADERS.size > LOADED.size) {
         return preloadAll()
       }
     })
   }
 
-  export async function load (loader) {
+  export async function load(loader) {
     const componentModule = await loader()
     const component = componentModule.default || componentModule
+
     LOADED.set(loader, component)
     return component
   }
+
+  let loadComponent = load
 </script>
 
 <script>
@@ -59,7 +60,7 @@
   export let component = null
   export let error = null
 
-  let load_time = null
+  let load_timer = null
   let timeout_timer = null
   let state = STATES.INITIALIZED
   let componentProps
@@ -77,7 +78,7 @@
   }
 
   function clearTimers() {
-    clearTimeout(load_time)
+    clearTimeout(load_timer)
     clearTimeout(timeout_timer)
   }
 
@@ -93,7 +94,7 @@
 
     if (delay > 0) {
       state = STATES.INITIALIZED
-      load_time = setTimeout(() => {
+      load_timer = setTimeout(() => {
         state = STATES.LOADING
       }, parseFloat(delay))
     } else {
@@ -107,10 +108,8 @@
     }
 
     try {
-      const componentModule = await loader()
+      component = await loadComponent(loader)
       state = STATES.SUCCESS
-      component = componentModule.default || componentModule
-      LOADED.set(loader, component)
     } catch (e) {
       state = STATES.ERROR
       error = e
