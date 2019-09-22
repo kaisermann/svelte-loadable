@@ -72,7 +72,7 @@ By default, Svelte Loadable will dynamically load the specified loader (import s
 
 To set that up, you'll need to `register` the loader at definition time in a module script block, instead of passing the loader directly to the loadable component instance, then pass the resulting loader on to the loadable component. It looks like this (with `svelte-routing`).
 
-*NOTE:* A resolve function is necessary for most SSR solutions. The function must return an absolute path, which will be used for indexing, and for loading before hydration. The specific way to generate that may vary by platform. A babel plugin for Svelte Loadable to help generate that automatically is forthcoming.
+*NOTE:* A `resolve` function is necessary for the cache to keep track of its loaded assets, and for SSR solutions. The `resolve` function must return a resolved path, which will be used to keep track of loadables, and to facilitate loading before hydration in SSR solutions. A [babel plugin](#babel-plugin) is included for basic caching functionality.
 
 **App.svelte:**
 
@@ -114,6 +114,36 @@ Another advantage is that if the same module is registered in two different plac
 
 This comes with additional benefits and opportunities as well. There is now a `preloadAll` method, which can be used to proactively (and recursively) preload all the modules after the initial render of the application, if desired. That method can also be used server side to preload all the necessary components to pull off server side rendering (SSR).
 
+### babel plugin
+
+The Svelte Loadable babel plugin will automatically add the `resolve` method to your registered loaders, to cut down on manual configuration. Add the Svelte Loadable babel plugin to your plugins list in `.babelrc` or equivalent:
+
+**.babelrc or package.json**
+
+```json
+{
+  "plugins": [
+    "svelte-loadable/babel"
+  ]
+}
+```
+
+Once configured, you can skip adding the resolve method, and let the babel plugin do it for you:
+
+```html
+<script context="module">
+import { register } from 'svelte-loadable'
+
+// Loaders must be registered outside of the render tree.
+const PageLoader = register({
+  loader: () => import('./pages/Page.svelte')
+})
+const HomeLoader = register({
+  loader: () => import('./home/Home.svelte')
+})
+</script>
+```
+
 ### Additional Methods
 
 #### preloadAll()
@@ -129,7 +159,7 @@ preloadAll().then(() => {...});
 
 ### The 'svelte-loadable-capture' Context for SSR
 
-To facilitate the creation of SSR solutions, Svelte Loadable uses a context which can be set up by an SSR solution in a `LoadableProvider` using the string identifier 'svelte-loadable-capture'. Svelte Loadable expects the context to provide a method, to which it will pass the registered loader function. For an example implementation, check out [`npdev:svelte-loadable`](https://github.com/CaptainN/npdev-svelte-loadable) a Meteor SSR solution.
+To facilitate the creation of SSR solutions, Svelte Loadable uses a context which can be set up by an SSR solution in a `LoadableProvider` using the string identifier 'svelte-loadable-capture'. Svelte Loadable expects the context to provide a method, to which it will pass the registered loader function. For an example implementation, check out [`npdev:svelte-loadable`](https://github.com/CaptainN/npdev-svelte-loadable) a Meteor SSR solution built on top of Svelte Loadable. The [babel plugin](#babel-plugin) is also useful for SSR, and provides everything needed for basic runtime caching, and `npdev:svele-loadable`.
 
 ---
 

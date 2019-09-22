@@ -22,7 +22,8 @@
     "prepublishOnly": "npm run release && npm run tag"
   },
   "files": [
-    "Loadable.svelte"
+    "Loadable.svelte",
+    "babel/**"
   ],
   "devDependencies": {
     "babel-eslint": "^10.0.1",
