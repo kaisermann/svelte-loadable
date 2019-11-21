@@ -31,7 +31,7 @@
     return Promise.all(
       Array.from(ALL_LOADERS.keys())
         .filter(loader => !LOADED.has(loader))
-        .map(async loader => load(loader)),
+        .map(async loader => loadComponent(loader)),
     ).then(() => {
       /** If new loaders have been registered by loaded components, load them next. */
       if (ALL_LOADERS.size > LOADED.size) {
@@ -40,15 +40,13 @@
     })
   }
 
-  export async function load(loader) {
+  export async function loadComponent(loader) {
     const componentModule = await loader()
     const component = componentModule.default || componentModule
 
     LOADED.set(loader, component)
     return component
   }
-
-  let loadComponent = load
 </script>
 
 <script>
