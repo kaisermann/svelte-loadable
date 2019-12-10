@@ -113,8 +113,9 @@
     } catch (e) {
       state = STATES.ERROR
       error = e
-      if (slots == null || slots.error == null)
+      if (slots == null || slots.error == null) {
         throw e
+      }
     }
 
     clearTimers()
