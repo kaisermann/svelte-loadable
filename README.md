@@ -14,11 +14,32 @@ Just pass a `loader` method which return a async module import:
 <Loadable loader={() => import('./AsyncComponent.svelte')} />
 ```
 
+Use `unload` to prevent Loadable from caching the component which will cause it to call `loader` each time the component is used.
+The example below is using SystemJS module loader which has the ability to 'unload' (delete) a loaded module.
+
+```html
+<script>
+  import Loadable from 'svelte-loadable'
+</script>
+
+<Loadable
+  loader={() => System.import('./AsyncComponent.svelte')}
+
+  <!-- use just unload (or unload=true) to ensure the component is not cached -->
+  <!-- unload -->
+
+  <!-- or use unload as a callback to ensure the component is not cached and
+       calls the callback immediatly after it is uncached -->
+  unload={() => System.delete(`${location.href}/AsyncComponent.svelte`)}
+/>
+```
+
 ### Props
 
 - `loader`: a function which `import()` your component to the `<Loadable>` component.
 - `delay`: minimum delay in `msecs` for showing the `loading slot`. Default: 200
 - `timeout`: time in `msecs` for showing the `timeout slot`.
+- `unload`: true to prevent the component from being reloaded or a function that will be called when Loadable is unmounted.
 
 Any other prop will be passed directly onto the rendered component if the `default` slot is defined:
 

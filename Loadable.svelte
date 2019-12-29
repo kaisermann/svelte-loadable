@@ -57,6 +57,7 @@
   export let delay = 200
   export let timeout = null
   export let loader = null
+  export let unload = false
   export let component = null
   export let error = null
 
@@ -124,7 +125,17 @@
     state = STATES.SUCCESS
     component = LOADED.get(loader)
   } else {
-    onMount(load)
+    onMount(() => {
+      load()
+      if (unload && unload !== 'false') {
+        return () => {
+          LOADED.delete(loader)
+          if (typeof unload === 'function') {
+            unload()
+          }
+        }
+      }
+    })
   }
 </script>
 
