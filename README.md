@@ -39,7 +39,7 @@ The example below is using SystemJS module loader which has the ability to 'unlo
 - `loader`: a function which `import()` your component to the `<Loadable>` component.
 - `delay`: minimum delay in `msecs` for showing the `loading slot`. Default: 200
 - `timeout`: time in `msecs` for showing the `timeout slot`.
-- `unload`: true to prevent the component from being reloaded or a function that will be called when Loadable is unmounted.
+- `unload`: true to prevent the component from being cached or a function which will also prevent the component from being cached and will be called immediatly after it is uncached.
 
 Any other prop will be passed directly onto the rendered component if the `default` slot is defined:
 
