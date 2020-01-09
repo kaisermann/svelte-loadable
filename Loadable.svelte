@@ -57,7 +57,7 @@
   export let delay = 200
   export let timeout = null
   export let loader = null
-  export let unload = false
+  export let unloadOnDestroy = false
   export let component = null
   export let error = null
 
@@ -127,11 +127,11 @@
   } else {
     onMount(() => {
       load()
-      if (unload && unload !== 'false') {
+      if (unloadOnDestroy && unloadOnDestroy !== 'false') {
         return () => {
           LOADED.delete(loader)
-          if (typeof unload === 'function') {
-            unload()
+          if (typeof unloadOnDestroy === 'function') {
+            unloadOnDestroy()
           }
         }
       }
