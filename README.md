@@ -14,8 +14,8 @@ Just pass a `loader` method which return a async module import:
 <Loadable loader={() => import('./AsyncComponent.svelte')} />
 ```
 
-Use `unload` to prevent Loadable from caching the component which will cause it to call `loader` each time the component is used.
-The example below is using SystemJS module loader which has the ability to 'unload' (delete) a loaded module.
+Use `unloadOnDestroy` to prevent Loadable from caching the component which will cause it to call `loader` each time the component is used.
+The example below is using SystemJS module loader which has the ability to 'unloadOnDestroy' (delete) a loaded module.
 
 ```html
 <script>
@@ -25,12 +25,12 @@ The example below is using SystemJS module loader which has the ability to 'unlo
 <Loadable
   loader={() => System.import('./AsyncComponent.svelte')}
 
-  <!-- use just unload (or unload=true) to ensure the component is not cached -->
-  <!-- unload -->
+  <!-- use just unloadOnDestroy (or unloadOnDestroy=true) to ensure the component is not cached -->
+  <!-- unloadOnDestroy -->
 
-  <!-- or use unload as a callback to ensure the component is not cached and
+  <!-- or use unloadOnDestroy as a callback to ensure the component is not cached and
        calls the callback immediatly after it is uncached -->
-  unload={() => System.delete(`${location.href}/AsyncComponent.svelte`)}
+  unloadOnDestroy={() => System.delete(`${location.href}/AsyncComponent.svelte`)}
 />
 ```
 
@@ -39,7 +39,7 @@ The example below is using SystemJS module loader which has the ability to 'unlo
 - `loader`: a function which `import()` your component to the `<Loadable>` component.
 - `delay`: minimum delay in `msecs` for showing the `loading slot`. Default: 200
 - `timeout`: time in `msecs` for showing the `timeout slot`.
-- `unload`: true to prevent the component from being cached or a function which will also prevent the component from being cached and will be called immediatly after it is uncached.
+- `unloadOnDestroy`: true to prevent the component from being cached or a function which will also prevent the component from being cached and will be called immediatly after it is uncached.
 
 Any other prop will be passed directly onto the rendered component if the `default` slot is defined:
 
