@@ -27,14 +27,11 @@ Any other prop will be passed directly onto the rendered component if no `succes
 <!-- `foo` and `bar` will be available to the rendered component -->
 ```
 
-If a `success` slot is used, the passed props will be available in the slots `props` object:
+If the default slot is used, it's up to the developer to render the component:
 
 ```html
-<Loadable loader="{...}" foo="cookie" bar="potato">
-  <div slot="success" let:component let:props>
-    <svelte:component this="{component}" {...props} />
-    <!-- `foo` and `bar` will be available to the rendered component -->
-  </div>
+<Loadable loader="{...}" let:component>
+  <svelte:component this="{component}" foo="cookie" bar="potato" />
 </Loadable>
 ```
 
@@ -43,7 +40,7 @@ If a `success` slot is used, the passed props will be available in the slots `pr
 - `loading`: customizes the loading state;
 - `error`: customizes the error state. You can `let:error` to have access to the error variable;
 - `timeout`: customizes the timeout state. Will only appear if `timeout` prop is defined;
-- `success`: customizes the imported component render (add props, etc). You can `let:component` to access the imported component and `let:props` to get all props passed to the component that are not related to `svelte-loadable`.
+- `default`: customizes the imported component render (add props, etc). You can `let:component` to access the imported component constructor.
 
 #### Basic Example:
 
@@ -63,49 +60,51 @@ If a `success` slot is used, the passed props will be available in the slots `pr
 ```
 
 ### Methods
-  - Use the `.load()` method to retry loading.
+
+- Use the `.load()` method to retry loading.
 
 ### Registering a loader
+
 #### Or, preventing "flash of loading"
 
 By default, Svelte Loadable will dynamically load the specified loader (import statement) every time the component is initialized and reinitialized. This creates a delay between initial rendering, and rending the loaded component, even for components which have previously been loaded. To work around that, Svelte Loadable provides an optional cache, which can be used to predefine a loader, and keep track of whether it has already been loaded. When a loader is registered, it will render immediately on the next initialization.
 
 To set that up, you'll need to `register` the loader at definition time in a module script block, instead of passing the loader directly to the loadable component instance, then pass the resulting loader on to the loadable component. It looks like this (with `svelte-routing`).
 
-*NOTE:* A resolve function is necessary for most SSR solutions. The function must return an absolute path, which will be used for indexing, and for loading before hydration. The specific way to generate that may vary by platform. A babel plugin for Svelte Loadable to help generate that automatically is forthcoming.
+_NOTE:_ A resolve function is necessary for most SSR solutions. The function must return an absolute path, which will be used for indexing, and for loading before hydration. The specific way to generate that may vary by platform. A babel plugin for Svelte Loadable to help generate that automatically is forthcoming.
 
 **App.svelte:**
 
 ```html
 <script context="module">
-import { register } from 'svelte-loadable'
+  import { register } from 'svelte-loadable'
 
-// Loaders must be registered outside of the render tree.
-const PageLoader = register({
-  loader: () => import('./pages/Page.svelte'),
-  resolve: () => require.resolve('./pages/Page.svelte')
-})
-const HomeLoader = register({
-  loader: () => import('./home/Home.svelte'),
-  resolve: () => require.resolve('./home/Home.svelte')
-})
+  // Loaders must be registered outside of the render tree.
+  const PageLoader = register({
+    loader: () => import('./pages/Page.svelte'),
+    resolve: () => require.resolve('./pages/Page.svelte'),
+  })
+  const HomeLoader = register({
+    loader: () => import('./home/Home.svelte'),
+    resolve: () => require.resolve('./home/Home.svelte'),
+  })
 </script>
 
 <script>
-import { Router, Link, Route } from 'svelte-routing'
-import Loadable from 'svelte-loadable'
+  import { Router, Link, Route } from 'svelte-routing'
+  import Loadable from 'svelte-loadable'
 
-export let url = ''
+  export let url = ''
 </script>
 
 <Router url="{url}">
   <Route path="/pages/:slug" let:params>
-    <Loadable loader={PageLoader} slug={params.slug}>
+    <Loadable loader="{PageLoader}" slug="{params.slug}">
       <div slot="loading">Loading...</div>
     </Loadable>
   </Route>
   <Route path="/">
-    <Loadable loader={HomeLoader} />
+    <Loadable loader="{HomeLoader}" />
   </Route>
 </Router>
 ```

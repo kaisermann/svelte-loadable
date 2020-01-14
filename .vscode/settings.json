@@ -3,9 +3,6 @@
 
   "files.trimTrailingWhitespace": true,
 
-  "prettier.eslintIntegration": true,
-  "prettier.stylelintIntegration": true,
-
   "javascript.validate.enable": false,
   "html.validate.scripts": false,
   "html.validate.styles": true,
@@ -18,5 +15,8 @@
     { "language": "svelte", "autoFix": true }
   ],
 
-  "debug.allowBreakpointsEverywhere": true
+  "debug.allowBreakpointsEverywhere": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

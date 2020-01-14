@@ -64,11 +64,10 @@
   let timeout_timer = null
   let state = STATES.INITIALIZED
   let componentProps
-  let slots
+  let slots = $$props.$$slots
 
   $: {
-    let { $$slots, delay, timeout, loader, component, error, ...rest } = $$props
-    slots = $$slots
+    let { delay, timeout, loader, component, error, ...rest } = $$props
     componentProps = rest
   }
 
@@ -137,7 +136,9 @@
   <slot name="loading" />
 {:else if state === STATES.SUCCESS}
   {#if slots && slots.success}
-    <slot name="success" {component} props={componentProps} />
+    <slot name="success" {component} />
+  {:else if slots && slots.default}
+    <slot {component} />
   {:else}
     <svelte:component this={component} {...componentProps} />
   {/if}
