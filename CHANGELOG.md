@@ -1,3 +1,12 @@
+## [1.3.2](https://github.com/kaisermann/svelte-loadable/compare/v1.3.1...v1.3.2) (2020-01-14)
+
+
+### Bug Fixes
+
+* 🐛 slot check ([619bf51](https://github.com/kaisermann/svelte-loadable/commit/619bf516a96bead547f4e42afdeb30299d635354))
+
+
+
 ## [1.3.1](https://github.com/kaisermann/svelte-loadable/compare/v1.3.0...v1.3.1) (2019-12-10)
 
 
@@ -40,16 +49,12 @@
 
 
 
-## [1.0.2](https://github.com/kaisermann/svelte-loadable/compare/v1.0.1...v1.0.2) (2019-07-25)
+## [1.0.2](https://github.com/kaisermann/svelte-loadable/compare/v1.0.0...v1.0.2) (2019-07-25)
 
 
 ### Bug Fixes
 
 * check if SLOTS exists before checking for a specific slot ([d3c82ba](https://github.com/kaisermann/svelte-loadable/commit/d3c82ba2c08b3a2d951ee6a7c048a3dfabef6f63))
-
-
-
-## [1.0.1](https://github.com/kaisermann/svelte-loadable/compare/v1.0.0...v1.0.1) (2019-07-25)
 
 
 
