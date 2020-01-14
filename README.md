@@ -20,7 +20,7 @@ Just pass a `loader` method which return a async module import:
 - `delay`: minimum delay in `msecs` for showing the `loading slot`. Default: 200
 - `timeout`: time in `msecs` for showing the `timeout slot`.
 
-Any other prop will be passed directly onto the rendered component if no `success` slot is defined:
+Any other prop will be passed directly onto the rendered component if the `default` slot is defined:
 
 ```html
 <Loadable loader="{...}" foo="cookie" bar="potato" />

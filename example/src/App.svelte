@@ -30,12 +30,10 @@
   </div>
 </Loadable>
 
-<h1>This one will work with custom props by using the "success" slots</h1>
-<Loadable loader={getDelayedLoader()}>
+<h1>This one will work with custom props by using the "default" slots</h1>
+<Loadable loader={getDelayedLoader()} let:component>
   <div slot="loading">Loading and blessed to succeed...</div>
-  <div slot="success" let:component>
-    <svelte:component this={component} customProp={true} />
-  </div>
+  <svelte:component this={component} customProp={true} />
 </Loadable>
 
 <h1>
@@ -44,17 +42,6 @@
 </h1>
 <Loadable loader={getDelayedLoader()} customProp={true}>
   <div slot="loading">Loading and blessed to succeed...</div>
-</Loadable>
-
-<h1>
-  This one will work with custom props by passing props to the Loadable
-  component and getting it in the success slot
-</h1>
-<Loadable loader={getDelayedLoader()} customProp={false}>
-  <div slot="loading">Loading and blessed to succeed...</div>
-  <div slot="success" let:component let:props>
-    <svelte:component this={component} customProp={props.customProp} />
-  </div>
 </Loadable>
 
 <h1>This one will timeout</h1>
