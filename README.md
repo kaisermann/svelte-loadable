@@ -14,24 +14,34 @@ Just pass a `loader` method which return a async module import:
 <Loadable loader={() => import('./AsyncComponent.svelte')} />
 ```
 
-Use `unloadOnDestroy` to prevent Loadable from caching the component which will cause it to call `loader` each time the component is used.
-The example below is using SystemJS module loader which has the ability to 'unloadOnDestroy' (delete) a loaded module.
+Use `unloader` to prevent Loadable from caching the component which will cause it to call `loader` each time the component is used.
 
 ```html
 <script>
   import Loadable from 'svelte-loadable'
+
+  // unloader callback
+  function unloader() {
+    // some code here
+  }
 </script>
 
+<!-- unloader as boolean -->
+<Loadable ... unloader />
+<Loadable ... unloader={true} />
+<Loadable ... unloader={someBooleanValue} />
+
+<!-- unloader as predefined function in script tag above -->
+<Loadable ... {unloader} />
+<!-- unloader as an inline function -->
+<Loadable ... unloader={() => { /* some code here */ }} />
+
+<!-- example using SystemJS Module Loader which has the ability to unload (delete) a previously loaded module -->
 <Loadable
   loader={() => System.import('./AsyncComponent.svelte')}
-
-  <!-- use just unloadOnDestroy (or unloadOnDestroy=true) to ensure the component is not cached -->
-  <!-- unloadOnDestroy -->
-
-  <!-- or use unloadOnDestroy as a callback to ensure the component is not cached and
-       calls the callback immediatly after it is uncached -->
-  unloadOnDestroy={() => System.delete(`${location.href}/AsyncComponent.svelte`)}
+  unloader={() => System.delete(System.resolve('./AsyncComponent.svelte'))}
 />
+
 ```
 
 ### Props
@@ -39,7 +49,7 @@ The example below is using SystemJS module loader which has the ability to 'unlo
 - `loader`: a function which `import()` your component to the `<Loadable>` component.
 - `delay`: minimum delay in `msecs` for showing the `loading slot`. Default: 200
 - `timeout`: time in `msecs` for showing the `timeout slot`.
-- `unloadOnDestroy`: true to prevent the component from being cached or a function which will also prevent the component from being cached and will be called immediatly after it is uncached.
+- `unloader`: true to prevent the component from being cached or a function which will also prevent the component from being cached and will be called immediatly after it is uncached.
 
 Any other prop will be passed directly onto the rendered component if the `default` slot is defined:
 
