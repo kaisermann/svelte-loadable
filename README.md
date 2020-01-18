@@ -14,7 +14,7 @@ Just pass a `loader` method which return a async module import:
 <Loadable loader={() => import('./AsyncComponent.svelte')} />
 ```
 
-Use `unloader` to prevent Loadable from caching the component which will cause it to call `loader` each time the component is used.
+Use `unloader` to prevent `Loadable` from caching the component which will cause it to call `loader` each time the component is used after being unmounted.
 
 ```html
 <script>
