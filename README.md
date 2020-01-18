@@ -49,7 +49,7 @@ Use `unloader` to prevent `Loadable` from caching the component which will cause
 - `loader`: a function which `import()` your component to the `<Loadable>` component.
 - `delay`: minimum delay in `msecs` for showing the `loading slot`. Default: 200
 - `timeout`: time in `msecs` for showing the `timeout slot`.
-- `unloader`: true to prevent the component from being cached or a function which will also prevent the component from being cached and will be called immediatly after it is uncached.
+- `unloader`: `true` to prevent the component from being cached or a `function` which will also prevent the component from being cached after being unmounted and will be called immediately after it is removed from cache.
 
 Any other prop will be passed directly onto the rendered component if the `default` slot is defined:
 
