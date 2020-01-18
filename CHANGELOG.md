@@ -1,3 +1,12 @@
+# [1.4.0](https://github.com/kaisermann/svelte-loadable/compare/v1.3.2...v1.4.0) (2020-01-18)
+
+
+### Features
+
+* add ability to unload component and optionally callback ([#23](https://github.com/kaisermann/svelte-loadable/issues/23)) ([086880c](https://github.com/kaisermann/svelte-loadable/commit/086880cc0517669511797bc5389c1a291e1ead68))
+
+
+
 ## [1.3.2](https://github.com/kaisermann/svelte-loadable/compare/v1.3.1...v1.3.2) (2020-01-14)
 
 
