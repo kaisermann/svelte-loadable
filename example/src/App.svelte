@@ -4,7 +4,7 @@
   let retry
 
   const getDelayedLoader = (delay = 3000) => () =>
-    new Promise((resolve, reject) =>
+    new Promise(resolve =>
       setTimeout(() => resolve(import('./AsyncComponent.svelte')), delay),
     )
 

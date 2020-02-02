@@ -11,7 +11,7 @@
   })
 
   export function findByResolved(resolved) {
-    for (let [loader, r] of ALL_LOADERS) {
+    for (const [loader, r] of ALL_LOADERS) {
       if (r === resolved) return loader
     }
     return null
@@ -40,15 +40,13 @@
     })
   }
 
-  export async function load(loader) {
+  export async function loadComponent(loader) {
     const componentModule = await loader()
     const component = componentModule.default || componentModule
 
     LOADED.set(loader, component)
     return component
   }
-
-  let loadComponent = load
 </script>
 
 <script>
@@ -65,10 +63,10 @@
   let timeout_timer = null
   let state = STATES.INITIALIZED
   let componentProps
-  let slots = $$props.$$slots
+  const slots = $$props.$$slots
 
   $: {
-    let { delay, timeout, loader, component, error, ...rest } = $$props
+    const { delay, timeout, loader, component, error, ...rest } = $$props
     componentProps = rest
   }
 

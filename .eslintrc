@@ -1,27 +1,8 @@
 {
   "root": true,
-  "extends": ["eslint:recommended", "prettier", "prettier/standard"],
-  "plugins": ["prettier", "html"],
+  "extends": ["kaisermann/svelte"],
   "parser": "babel-eslint",
-  "settings": {
-    "html/html-extensions": [".html", ".svelte"],
-    "html/indent": "+2",
-    "html/report-bad-indent": "warn"
-  },
   "env": {
-    "browser": true,
-    "es6": true
-  },
-  "parserOptions": {
-    "ecmaFeatures": {
-      "modules": true
-    }
-  },
-  "globals": {
-    "$$props": true
-  },
-  "rules": {
-    "no-unused-vars": "off",
-    "no-unused-labels": "off"
+    "jest": true
   }
 }
