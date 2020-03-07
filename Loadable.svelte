@@ -52,7 +52,7 @@
 </script>
 
 <script>
-  import { onMount, getContext } from 'svelte'
+  import { onMount, getContext, createEventDispatcher } from 'svelte'
 
   export let delay = 200
   export let timeout = null
@@ -71,6 +71,8 @@
     let { delay, timeout, loader, component, error, ...rest } = $$props
     componentProps = rest
   }
+
+  const dispatch = createEventDispatcher()
 
   const capture = getContext('svelte-loadable-capture')
   if (typeof capture === 'function' && ALL_LOADERS.has(loader)) {
@@ -125,8 +127,9 @@
     state = STATES.SUCCESS
     component = LOADED.get(loader)
   } else {
-    onMount(() => {
-      load()
+    onMount(async () => {
+      await load()
+      dispatch('loaded')
       if (unloader) {
         return () => {
           LOADED.delete(loader)
