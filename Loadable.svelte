@@ -129,7 +129,7 @@
   } else {
     onMount(async () => {
       await load()
-      dispatch('loaded')
+      dispatch('load')
       if (unloader) {
         return () => {
           LOADED.delete(loader)
