@@ -1,3 +1,12 @@
+# [1.5.0](https://github.com/kaisermann/svelte-loadable/compare/v1.4.0...v1.5.0) (2020-05-12)
+
+
+### Features
+
+* create callback event after component loads ([#28](https://github.com/kaisermann/svelte-loadable/issues/28)) ([1b8609b](https://github.com/kaisermann/svelte-loadable/commit/1b8609b0c7124671f4aad06241ca1c703be5738e))
+
+
+
 # [1.4.0](https://github.com/kaisermann/svelte-loadable/compare/v1.3.2...v1.4.0) (2020-01-18)
 
 
