@@ -1,7 +1,13 @@
 {
   "root": true,
   "extends": ["eslint:recommended", "prettier", "prettier/standard"],
-  "plugins": ["prettier", "html"],
+  "plugins": ["prettier", "html", "svelte3"],
+  "overrides": [
+    {
+      "files": ["**/*.svelte"],
+      "processor": "svelte3/svelte3"
+    }
+  ],
   "parser": "babel-eslint",
   "settings": {
     "html/html-extensions": [".html", ".svelte"],

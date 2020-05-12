@@ -66,6 +66,20 @@ If the default slot is used, it's up to the developer to render the component:
 </Loadable>
 ```
 
+### Events
+
+- `on:load`: a function which is executed right after the `<Loadable>` component is loaded.
+
+```html
+<Loadable on:load={() => console.log('The component has been loaded')} loader={...} />
+```
+
+Otherwise, if your callback contains more code, you can wrap it into a function, and call it without parentheses
+
+```html
+<Loadable on:load={callback} loader={...} />
+```
+
 ### Slots
 
 - `loading`: customizes the loading state;
