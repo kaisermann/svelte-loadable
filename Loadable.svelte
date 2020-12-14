@@ -68,7 +68,7 @@
   let state = STATES.INITIALIZED
   let componentProps
   let slots = $$props.$$slots
-  let mounted = true;
+  let mounted = false;
 
   $: {
     let { delay, timeout, loader, component, error, ...rest } = $$props
@@ -131,7 +131,8 @@
     component = LOADED.get(loader)
   } else {
     onMount(() => {
-      Promise.resolve(load()).then(() => {
+      mounted = true;
+      load().then(() => {
         if (mounted) {
           dispatch('load')
         }
