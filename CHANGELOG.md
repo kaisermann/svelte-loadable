@@ -1,3 +1,12 @@
+## [1.5.1](https://github.com/kaisermann/svelte-loadable/compare/v1.5.0...v1.5.1) (2020-12-17)
+
+
+### Bug Fixes
+
+* make onMount sync and suppress load event when un-mounted ([#40](https://github.com/kaisermann/svelte-loadable/issues/40)) ([50ff154](https://github.com/kaisermann/svelte-loadable/commit/50ff154309d370631b738f0fe0107daaf3e4b0e8))
+
+
+
 # [1.5.0](https://github.com/kaisermann/svelte-loadable/compare/v1.4.0...v1.5.0) (2020-05-12)
 
 
