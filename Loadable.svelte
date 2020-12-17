@@ -40,11 +40,13 @@
     })
   }
 
-  export async function load(loader) {
+  export async function load(loader, unloader) {
     const componentModule = await loader()
     const component = componentModule.default || componentModule
 
-    LOADED.set(loader, component)
+    if (!unloader){
+      LOADED.set(loader, component)
+    }
     return component
   }
 
@@ -66,6 +68,7 @@
   let state = STATES.INITIALIZED
   let componentProps
   let slots = $$props.$$slots
+  let mounted = false;
 
   $: {
     let { delay, timeout, loader, component, error, ...rest } = $$props
@@ -110,7 +113,7 @@
     }
 
     try {
-      component = await loadComponent(loader)
+      component = await loadComponent(loader, unloader)
       state = STATES.SUCCESS
     } catch (e) {
       state = STATES.ERROR
@@ -127,15 +130,18 @@
     state = STATES.SUCCESS
     component = LOADED.get(loader)
   } else {
-    onMount(async () => {
-      await load()
-      dispatch('load')
-      if (unloader) {
-        return () => {
-          LOADED.delete(loader)
-          if (typeof unloader === 'function') {
-            unloader()
-          }
+    onMount(() => {
+      mounted = true;
+      load().then(() => {
+        if (mounted) {
+          dispatch('load')
+        }
+      })
+
+      return () => {
+        mounted = false;
+        if (typeof unloader === 'function') {
+          unloader()
         }
       }
     })
