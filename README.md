@@ -92,6 +92,8 @@ Otherwise, if your callback contains more code, you can wrap it into a function,
 ```html
 <script>
   import Loadable from 'svelte-loadable'
+
+  let loadable
 </script>
 
 <Loadable bind:this={loadable} loader={() => import('./AsyncComponent.svelte')}>
@@ -99,7 +101,7 @@ Otherwise, if your callback contains more code, you can wrap it into a function,
   <div slot="error" let:error>
     {error}
     <br>
-    <button on:click="loadable.load()">Try again</button>
+    <button on:click={loadable.load}>Try again</button>
   </div>
 </Loadable>
 ```
