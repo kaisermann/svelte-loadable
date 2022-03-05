@@ -1,4 +1,4 @@
-# [2.0.0](https://github.com/kaisermann/svelte-loadable/compare/v1.5.1...v2.0.0) (2022-03-05)
+# [2.0.1](https://github.com/kaisermann/svelte-loadable/compare/v1.5.1...v2.0.0) (2022-03-05)
 
 
 ### Features

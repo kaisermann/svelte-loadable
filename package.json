@@ -1,6 +1,6 @@
 {
   "name": "svelte-loadable",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "main": "Loadable.svelte",
   "svelte": "Loadable.svelte",
@@ -18,8 +18,7 @@
     "format": "eslint --ext .svelte . --fix",
     "version": "npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "tag": "git tag -a v$npm_package_version -m 'Release v$npm_package_version'",
-    "release": "npm run version && npm i --package-lock-only && git add package.json package-lock.json && git commit -m \"chore: release v$npm_package_version\"",
-    "prepublishOnly": "npm run release && npm run tag"
+    "release": "npm run version && npm i --package-lock-only && git add package.json package-lock.json && git commit -m \"chore: release v$npm_package_version\""
   },
   "files": [
     "Loadable.svelte"
