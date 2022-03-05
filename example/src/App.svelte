@@ -1,17 +1,19 @@
 <script>
   import Loadable from '../../Loadable.svelte'
 
-  let retry
+  const getDelayedLoader =
+    (delay = 3000) =>
+    () =>
+      new Promise((resolve) =>
+        setTimeout(() => resolve(import('./AsyncComponent.svelte')), delay),
+      )
 
-  const getDelayedLoader = (delay = 3000) => () =>
-    new Promise((resolve, reject) =>
-      setTimeout(() => resolve(import('./AsyncComponent.svelte')), delay),
-    )
-
-  const getFailureLoader = (delay = 3000) => () =>
-    new Promise((resolve, reject) =>
-      setTimeout(() => reject(new Error('Some error')), delay),
-    )
+  const getFailureLoader =
+    (delay = 3000) =>
+    () =>
+      new Promise((resolve, reject) =>
+        setTimeout(() => reject(new Error('Some error')), delay),
+      )
 </script>
 
 <h1>This one will work</h1>

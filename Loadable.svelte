@@ -10,10 +10,11 @@
     TIMEOUT: 4,
   })
 
-  export function findByResolved(resolved) {
-    for (let [loader, r] of ALL_LOADERS) {
+  function findByResolved(resolved) {
+    for (const [loader, r] of ALL_LOADERS) {
       if (r === resolved) return loader
     }
+
     return null
   }
 
@@ -24,6 +25,7 @@
     if (loader) return loader
 
     ALL_LOADERS.set(loadable.loader, resolved)
+
     return loadable.loader
   }
 
@@ -31,7 +33,7 @@
     return Promise.all(
       Array.from(ALL_LOADERS.keys())
         .filter((loader) => !LOADED.has(loader))
-        .map(async (loader) => load(loader)),
+        .map((loader) => loadComponent(loader)),
     ).then(() => {
       /** If new loaders have been registered by loaded components, load them next. */
       if (ALL_LOADERS.size > LOADED.size) {
@@ -40,17 +42,16 @@
     })
   }
 
-  export async function load(loader, unloader) {
+  async function loadComponent(loader, unloader) {
     const componentModule = await loader()
     const component = componentModule.default || componentModule
 
     if (!unloader) {
       LOADED.set(loader, component)
     }
+
     return component
   }
-
-  let loadComponent = load
 </script>
 
 <script>
@@ -63,21 +64,25 @@
   export let component = null
   export let error = null
 
+  const slots = $$props.$$slots
+
   let load_timer = null
   let timeout_timer = null
   let state = STATES.INITIALIZED
   let componentProps
-  let slots = $$props.$$slots
   let mounted = false
 
   $: {
-    let { delay, timeout, loader, component, error, ...rest } = $$props
+    // eslint-disable-next-line no-shadow
+    const { delay, timeout, loader, component, error, ...rest } = $$props
+
     componentProps = rest
   }
 
   const dispatch = createEventDispatcher()
 
   const capture = getContext('svelte-loadable-capture')
+
   if (typeof capture === 'function' && ALL_LOADERS.has(loader)) {
     capture(loader)
   }
@@ -87,7 +92,7 @@
     clearTimeout(timeout_timer)
   }
 
-  export async function load() {
+  async function load() {
     clearTimers()
 
     if (typeof loader !== 'function') {

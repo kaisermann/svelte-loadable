@@ -14,8 +14,8 @@
     "loadable"
   ],
   "scripts": {
-    "lint": "eslint \"*.svelte\"",
-    "format": "eslint --fix \"*.svelte\"",
+    "lint": "eslint --ext .svelte .",
+    "format": "eslint --ext .svelte . --fix",
     "version": "npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "tag": "git tag -a v$npm_package_version -m 'Release v$npm_package_version'",
     "release": "npm run version && npm i --package-lock-only && git add package.json package-lock.json && git commit -m \"chore: release v$npm_package_version\"",
@@ -25,18 +25,11 @@
     "Loadable.svelte"
   ],
   "devDependencies": {
+    "@kiwi/eslint-config": "^1.19.1",
+    "@kiwi/prettier-config": "^1.19.1",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-html": "^6.0.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "eslint-plugin-svelte3": "^2.7.3",
-    "prettier": "^2.0.1",
+    "eslint": "^8.10.0",
+    "prettier": "^2.5.1",
     "svelte": "^3.20.1"
   },
   "peerDependencies": {
