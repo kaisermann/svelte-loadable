@@ -20,13 +20,13 @@
 </Loadable>
 
 <h1>This one will not</h1>
-<Loadable loader={getFailureLoader(5000)} timeout="3000" bind:this={retry}>
+<Loadable loader={getFailureLoader(5000)} timeout="3000">
   <div slot="loading">Loading but doomed to failed...</div>
   <div slot="timeout">This is taking a while...</div>
-  <div slot="error" let:error>
+  <div slot="error" let:error let:retry>
     {error}
     <br />
-    <button on:click={() => retry.load()}>Try again</button>
+    <button on:click={retry}>Try again</button>
   </div>
 </Loadable>
 

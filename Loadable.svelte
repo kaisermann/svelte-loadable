@@ -30,8 +30,8 @@
   export function preloadAll() {
     return Promise.all(
       Array.from(ALL_LOADERS.keys())
-        .filter(loader => !LOADED.has(loader))
-        .map(async loader => load(loader)),
+        .filter((loader) => !LOADED.has(loader))
+        .map(async (loader) => load(loader)),
     ).then(() => {
       /** If new loaders have been registered by loaded components, load them next. */
       if (ALL_LOADERS.size > LOADED.size) {
@@ -44,7 +44,7 @@
     const componentModule = await loader()
     const component = componentModule.default || componentModule
 
-    if (!unloader){
+    if (!unloader) {
       LOADED.set(loader, component)
     }
     return component
@@ -68,7 +68,7 @@
   let state = STATES.INITIALIZED
   let componentProps
   let slots = $$props.$$slots
-  let mounted = false;
+  let mounted = false
 
   $: {
     let { delay, timeout, loader, component, error, ...rest } = $$props
@@ -131,7 +131,7 @@
     component = LOADED.get(loader)
   } else {
     onMount(() => {
-      mounted = true;
+      mounted = true
       load().then(() => {
         if (mounted) {
           dispatch('load')
@@ -139,7 +139,7 @@
       })
 
       return () => {
-        mounted = false;
+        mounted = false
         if (typeof unloader === 'function') {
           unloader()
         }
@@ -158,7 +158,7 @@
   {#if slots && slots.success}
     <slot name="success" {component} />
   {:else if slots && slots.default}
-    <slot {component} />
+    <slot {component} retry={load} />
   {:else}
     <svelte:component this={component} {...componentProps} />
   {/if}

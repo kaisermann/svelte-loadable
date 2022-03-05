@@ -28,8 +28,8 @@ Use `unloader` to prevent `Loadable` from caching the component which will cause
 
 <!-- unloader as boolean -->
 <Loadable ... unloader />
-<Loadable ... unloader={true} />
-<Loadable ... unloader={someBooleanValue} />
+<Loadable ... unloader="{true}" />
+<Loadable ... unloader="{someBooleanValue}" />
 
 <!-- unloader as predefined function in script tag above -->
 <Loadable ... {unloader} />
@@ -37,11 +37,8 @@ Use `unloader` to prevent `Loadable` from caching the component which will cause
 <Loadable ... unloader={() => { /* some code here */ }} />
 
 <!-- example using SystemJS Module Loader which has the ability to unload (delete) a previously loaded module -->
-<Loadable
-  loader={() => System.import('./AsyncComponent.svelte')}
-  unloader={() => System.delete(System.resolve('./AsyncComponent.svelte'))}
-/>
-
+<Loadable loader={() => System.import('./AsyncComponent.svelte')} unloader={()
+=> System.delete(System.resolve('./AsyncComponent.svelte'))} />
 ```
 
 ### Props
@@ -71,44 +68,39 @@ If the default slot is used, it's up to the developer to render the component:
 - `on:load`: a function which is executed right after the `<Loadable>` component is loaded.
 
 ```html
-<Loadable on:load={() => console.log('The component has been loaded')} loader={...} />
+<Loadable on:load={() => console.log('The component has been loaded')}
+loader={...} />
 ```
 
 Otherwise, if your callback contains more code, you can wrap it into a function, and call it without parentheses
 
 ```html
-<Loadable on:load={callback} loader={...} />
+<Loadable on:load="{callback}" loader="{...}" />
 ```
 
 ### Slots
 
 - `loading`: customizes the loading state;
-- `error`: customizes the error state. You can `let:error` to have access to the error variable;
+- `error`: customizes the error state. You can `let:error` to have access to the error variable, and `let:retry` to have access to the retry method.
 - `timeout`: customizes the timeout state. Will only appear if `timeout` prop is defined;
 - `default`: customizes the imported component render (add props, etc). You can `let:component` to access the imported component constructor.
 
-#### Basic Example:
+#### Basic Example
 
 ```html
 <script>
   import Loadable from 'svelte-loadable'
-
-  let loadable
 </script>
 
-<Loadable bind:this={loadable} loader={() => import('./AsyncComponent.svelte')}>
+<Loadable loader={() => import('./AsyncComponent.svelte')}>
   <div slot="loading">Loading...</div>
-  <div slot="error" let:error>
+  <div slot="error" let:error let:retry>
     {error}
     <br>
-    <button on:click={loadable.load}>Try again</button>
+    <button on:click={retry}>Try again</button>
   </div>
 </Loadable>
 ```
-
-### Methods
-
-- Use the `.load()` method to retry loading.
 
 ### Registering a loader
 
