@@ -1,3 +1,12 @@
+# [2.0.0](https://github.com/kaisermann/svelte-loadable/compare/v1.5.1...v2.0.0) (2022-03-05)
+
+
+### Features
+
+* pass retry method to error slot ([f798b08](https://github.com/kaisermann/svelte-loadable/commit/f798b08dd9a76c0fe15002be34cb7a4ea06ca5b3))
+
+
+
 ## [1.5.1](https://github.com/kaisermann/svelte-loadable/compare/v1.5.0...v1.5.1) (2020-12-17)
 
 
