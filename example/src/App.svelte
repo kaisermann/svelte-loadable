@@ -51,8 +51,3 @@
   <div slot="loading">Loading...</div>
   <div slot="timeout">This is taking a little bit too long...</div>
 </Loadable>
-
-<h1>This one will work</h1>
-<Loadable loader={() => import('./AsyncComponent.svelte')} delay="300">
-  <div slot="loading">Loading and blessed to succeed...</div>
-</Loadable>
